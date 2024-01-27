@@ -33,16 +33,19 @@ android {
             cmake {
                 cppFlags += listOf(
                     "-O3",
-                     "-ffast-math",           // Uncomment to test Fast Math Optimizations
+                    "-ffast-math",           // Uncomment to test Fast Math Optimizations
                     "-ftree-vectorize",      // Enable Vectorization
-                    // "-flto",                 // Uncomment to enable Link Time Optimization
-                    // "-finline-functions",    // Uncomment to encourage Function Inlining
-//                    "-fno-rtti"
+                    "-flto",                 // Uncomment to enable Link Time Optimization
+                    "-finline-functions",    // Uncomment to encourage Function Inlining
+                    "-fno-rtti"
                 )
                 cFlags += listOf(
                     "-O3",
-                     "-ffast-math",           // Uncomment to test Fast Math Optimizations
-                    "-ftree-vectorize"       // Enable Vectorization
+                    "-ffast-math",           // Uncomment to test Fast Math Optimizations
+                    "-ftree-vectorize",      // Enable Vectorization
+                    "-flto",                 // Uncomment to enable Link Time Optimization
+                    "-finline-functions",    // Uncomment to encourage Function Inlining
+                    "-fno-rtti"
                 )
                 arguments += "-DCMAKE_BUILD_TYPE=Release"
             }
