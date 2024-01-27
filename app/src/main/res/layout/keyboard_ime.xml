@@ -1,0 +1,89 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/keyboard_bg_root">
+
+    <LinearLayout
+        android:id="@+id/container_keyboard_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/keyboard_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/keyboard_bg_root"
+            android:minHeight="@dimen/frogo_dimen_64dp" />
+        <ProgressBar
+            android:id="@+id/keyboard_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/container_keyboard_main"
+            app:layout_constraintBottom_toBottomOf="@id/container_keyboard_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.frogobox.libkeyboard.ui.main.MainKeyboard
+            android:id="@+id/keyboard_main"
+            style="@style/KwKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_dark_background_color" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mock_measure_height_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/container_keyboard_main">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mock_keyboard_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/keyboard_bg_root"
+            android:minHeight="@dimen/frogo_dimen_64dp" />
+
+        <com.frogobox.libkeyboard.ui.main.MainKeyboard
+            android:id="@+id/mock_measure_height_keyboard_main"
+            style="@style/KwKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_dark_background_color" />
+
+    </LinearLayout>
+
+    <com.torphix.brainkey.ui.keyboard.prompts.PromptKeyboard
+        android:id="@+id/keyboard_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/mock_measure_height_keyboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mock_measure_height_keyboard" />
+
+    <com.frogobox.libkeyboard.ui.emoji.EmojiKeyboard
+        android:id="@+id/keyboard_emoji"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/mock_measure_height_keyboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mock_measure_height_keyboard" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
