@@ -6,4 +6,6 @@
 5. Add XML icon to res/drawable
 6. Add logic to services/KeyboardIME.kt
 7. If adding a new keyboard ie: it opens a new menu when clicked on then add a keyboard_name.xml to res/layout that is subclassed in ui/keyboard/NameOfFeature.kt
-# brainkeys-private
+
+# Limitations
+- Note, armeabi-v7a architecture is not supported. Only arm64-v8a and x86_64 are supported.

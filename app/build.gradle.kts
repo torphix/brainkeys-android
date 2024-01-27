@@ -31,45 +31,20 @@ android {
         }
         externalNativeBuild {
             cmake {
-                if (project.hasProperty("only-arm64-v8a")) {
-                    cppFlags += listOf(
-                        "-O3",
-//                        "-march=armv8.2-a+fp16",
-                        "-ffast-math",           // Fast Math Optimizations
-                        "-flto",                 // Link Time Optimization
-                        "-finline-functions",    // Encourage Function Inlining
-                        "-ftree-vectorize",      // Enable Vectorization
-                        "-fno-rtti",             // Disable RTTI if not used
-                    )
-                    cFlags += listOf(
-                        "-O3",
-//                        "-march=armv8.2-a+fp16",
-                        "-ffast-math",
-                        "-flto",
-                        "-finline-functions",
-                        "-ftree-vectorize",
-                        "-fno-rtti",
-                    )
-                } else {
-                    cppFlags += listOf(
-                        "-O3",
-//                        "-mfpu=neon-vfpv4",      // NEON optimizations for other ABIs
-                        "-ffast-math",
-                        "-flto",
-                        "-finline-functions",
-                        "-ftree-vectorize",
-                        "-fno-rtti",
-                    )
-                    cFlags += listOf(
-                        "-O3",
-//                        "-mfpu=neon-vfpv4",
-                        "-ffast-math",
-                        "-flto",
-                        "-finline-functions",
-                        "-ftree-vectorize",
-                        "-fno-rtti",
-                    )
-                }
+                cppFlags += listOf(
+                    "-O3",
+                     "-ffast-math",           // Uncomment to test Fast Math Optimizations
+                    "-ftree-vectorize",      // Enable Vectorization
+                    // "-flto",                 // Uncomment to enable Link Time Optimization
+                    // "-finline-functions",    // Uncomment to encourage Function Inlining
+//                    "-fno-rtti"
+                )
+                cFlags += listOf(
+                    "-O3",
+                     "-ffast-math",           // Uncomment to test Fast Math Optimizations
+                    "-ftree-vectorize"       // Enable Vectorization
+                )
+                arguments += "-DCMAKE_BUILD_TYPE=Release"
             }
         }
     }
