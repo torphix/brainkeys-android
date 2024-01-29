@@ -30,11 +30,16 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
-    private val job = Job()
+    private var job = Job()
 
     // Define a CoroutineScope tied to job
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private var coroutineScope = CoroutineScope(Dispatchers.Main + job)
     private val keyboardSettingsRepository = KeyboardSettingsRepository(this)
+
+    private fun startNewJob() {
+        job = Job() // Create a new job
+        coroutineScope = CoroutineScope(Dispatchers.Main + job) // Update the coroutine scope
+    }
 
     override fun setupViewBinding(): KeyboardImeBinding {
         return KeyboardImeBinding.inflate(LayoutInflater.from(this), null, false)
@@ -49,6 +54,16 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
         initialSetupKeyboard()
         binding?.keyboardMain?.mOnKeyboardActionListener = this
         binding?.keyboardEmoji?.mOnKeyboardActionListener = this
+
+
+        binding?.keyboardCancelButton?.setOnClickListener {
+            job.cancel("User Cancelled")
+            startNewJob() // Start a new job for future coroutines
+            binding?.apply {
+                keyboardHeader.visible()
+                keyboardLoading.gone()
+            }
+        }
     }
 
     override fun invalidateKeyboard() {
@@ -139,6 +154,7 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
     }
 
     private fun inferenceLLM(prompt:String, callback: (String) -> Unit, formatPrompt:Boolean=true){
+        startNewJob()
         binding?.apply {
             keyboardHeader.gone()
             keyboardLoading.visible()
@@ -161,21 +177,26 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
                     println(inputText)
                 }
                 Log.i("Input text","Input Text: $inputText")
+                if (!isActive) return@launch  // Check for cancellation
                 llm.load("${extFilesDir}/${modelName}")
                 llm.send(inputText).catch {
                     Log.e("Inference Model", "send() failed", it)
                 }.collect {
                     Log.i("Inference Model", "Token $it")
+                    if (!isActive) return@collect  // Check for cancellation
                     callback(it)
                 }
-                llm.unload()
+            } catch (e: CancellationException) {
+                Log.e(tag, "User cancelled inference call")
             } catch (exc: IllegalStateException) {
                 Log.e(tag, "load() failed", exc)
                 showErrorSnackbar("Loading model failed, try selecting / re-downloading")
-            }
-            binding?.apply {
-                keyboardHeader.visible()
-                keyboardLoading.gone()
+            } finally {
+                llm.unload()
+                binding?.apply {
+                    keyboardHeader.visible()
+                    keyboardLoading.gone()
+                }
             }
     }}
 
@@ -248,7 +269,7 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
                                     )
                                     // Return the current text, or null if it can't be retrieved
                                     var inputText = extractedText?.text?.toString() ?: return
-                                    inputText = "<|assistant|>${inputText}"
+                                    inputText = "<|user|>Your response should be short and to the point<|endoftext|><|assistant|>${inputText}"
                                     currentInputConnection.commitText(" ", 1)
                                     inferenceLLM(
                                         inputText,

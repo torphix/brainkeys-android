@@ -18,16 +18,30 @@
             android:layout_height="wrap_content"
             android:background="@color/keyboard_bg_root"
             android:minHeight="@dimen/frogo_dimen_64dp" />
-        <ProgressBar
+
+        <LinearLayout
             android:id="@+id/keyboard_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:orientation="horizontal"
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/container_keyboard_main"
-            app:layout_constraintBottom_toBottomOf="@id/container_keyboard_main"
+            app:layout_constraintBottom_toBottomOf="@id/mock_measure_height_keyboard"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/mock_measure_height_keyboard" >
+        <ProgressBar
+            android:id="@+id/keyboard_loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp" />
+        <Button
+            android:id="@+id/keyboard_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+    </LinearLayout>
+
+
 
         <com.frogobox.libkeyboard.ui.main.MainKeyboard
             android:id="@+id/keyboard_main"

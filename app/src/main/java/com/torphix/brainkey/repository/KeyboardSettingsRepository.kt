@@ -76,7 +76,7 @@ class KeyboardSettingsRepository(private val context: Context){
         val sharedPreferences = getPreferences()
         var systemPrompt =  sharedPreferences.getString(SystemPrompt, "") ?: ""
         if (systemPrompt == ""){
-            systemPrompt = "Keep your answer concise and to the point"
+            systemPrompt = "Your response should be short and to the point"
         }
         return systemPrompt
     }
