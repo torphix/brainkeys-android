@@ -11,44 +11,29 @@ BrainKey is a keyboard app for Android that integrates LLMs directly into your k
 
 ## Showcase
 
+### Video 
+![VideoShowcase](/Screenshots/Screen_Recording_20240129_120528_BrainKey Keyboard.mp4)
+
+### Screenshots
+![Screenshot1](/Screenshots/Screenshot_1706389798.png) ![Screenshot2](/Screenshots/Screenshot_1706389933.png) ![Screenshot3](/Screenshots/Screenshot_1706389938.png) ![Screenshot4](/Screenshots/Screenshot_1706389806.png)
 
 ## Installation
 
-Provide detailed instructions on how to install BrainKey on an Android device.
+1. Clone the project
+2. Open in android studio
+3. Click the play button in the top right corner
 
-```bash
-# Example installation steps
-Usage
-Explain how users can leverage BrainKey once installed. Include code snippets or step-by-step instructions.
+[Playstore](https://play.google.com/store/apps/details?id=com.torphix.brainkey)
 
-bash
-Copy code
-# Example usage commands
-Screenshots and Demonstrations
+# New Features
+- Submit an issue with bugs / feature requests and ill do them at the weekend
+- PRs are welcome
 
-Visual demonstrations of BrainKey in action. Screenshots showing the keyboard interface, example prompts, and the AI's responses.
+# References
+- [llama.cpp](https://github.com/ggerganov/llama.cpp)
+- [Stability.ai](https://huggingface.co/stabilityai/stablelm-2-zephyr-1_6b)
+- [Phi 2](https://huggingface.co/microsoft/phi-2)
+- [HuggingFace](https://huggingface.co/)
 
-Supported Models
-StableLM-2: Details about the StableLM-2 integration.
-Phi 2: Information about the Phi 2 model and its capabilities within BrainKey.
-References
-Any academic papers, articles, or external documentation that influenced BrainKey's development or are relevant for understanding its underlying technology.
-
-Contributing
-Encourage contributions and provide guidelines for how others can contribute to BrainKey.
-
-License
+# License
 MIT License
-
-Contact
-Your contact information for support or queries related to BrainKey.
-
-Acknowledgments
-Contributors and collaborators.
-Any third-party libraries or resources used in the project.
-vbnet
-Copy code
-
-Remember to replace placeholders like `url-to-screenshot` with actual links to your project's screenshots or visual demonstrations. Also, tailor the installation and usage instructions to match the specific steps required for BrainKey. 
-
-This template should provide a solid foundation for your project's README, ensuring that it is both informative and visually appealing.
