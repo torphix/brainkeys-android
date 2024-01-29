@@ -150,12 +150,15 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
             val tag = "Loading Model"
             try {
                 var modelName =  keyboardSettingsRepository.getActiveModel()
+                var systemPrompt = keyboardSettingsRepository.getSystemPrompt()
                 if (modelName == ""){
                     throw Exception("Select a model in the app first")
                 }
                 var inputText = prompt
                 if (formatPrompt) {
-                    inputText = LlmUtil.formatPrompt(prompt, modelName)
+                    inputText = LlmUtil.formatPrompt(systemPrompt, prompt, modelName)
+                    println("Input prompt")
+                    println(inputText)
                 }
                 Log.i("Input text","Input Text: $inputText")
                 llm.load("${extFilesDir}/${modelName}")

@@ -71,6 +71,10 @@ class MainActivity(
     private fun getUserPrompts(): List<String> {
         return keyboardSettingsRepository.getUserPrompts()
     }
+
+    private fun getSystemPrompt(): String{
+        return keyboardSettingsRepository.getSystemPrompt()
+    }
     override fun onResume() {
         super.onResume()
         viewModel.setLatestState(
@@ -80,6 +84,7 @@ class MainActivity(
                 availableMemory = availableMemory().availMem,
                 activeModel = getActiveModel(),
                 userPrompts = getUserPrompts(),
+                systemPrompt = getSystemPrompt(),
                 keyboardSettingsRepository=keyboardSettingsRepository,
             )
     }
@@ -96,6 +101,7 @@ class MainActivity(
                         availableMemory = availableMemory().availMem,
                         activeModel = getActiveModel(),
                         userPrompts = getUserPrompts(),
+                        systemPrompt = getSystemPrompt(),
                         keyboardSettingsRepository = keyboardSettingsRepository,
                     )
             }, 500) // A short delay like 100ms should be sufficient

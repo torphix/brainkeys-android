@@ -28,12 +28,14 @@ class MainViewModel(private val llm: Llm = Llm.instance()): ViewModel() {
         availableMemory:Long,
         activeModel: String,
         userPrompts: List<String>,
+        systemPrompt: String,
         keyboardSettingsRepository: KeyboardSettingsRepository
         ){
         updateKeyboardStatus(isKeyboardEnabled, isUsingKeyboard)
         updateMemoryStatus(totalMemory, availableMemory)
         updateActiveModel(activeModel, keyboardSettingsRepository)
         updateUserPrompts(userPrompts, keyboardSettingsRepository)
+        updateSystemPrompt(systemPrompt, keyboardSettingsRepository)
 
     }
 
@@ -65,6 +67,14 @@ class MainViewModel(private val llm: Llm = Llm.instance()): ViewModel() {
     fun updateMemoryStatus(totalMemory: Long, freeMemory:Long){
         _freeMemory.value = freeMemory
         _totalMemory.value = totalMemory
+    }
+
+    private val _systemPrompt = MutableLiveData<String>("")
+    val systemPrompt: LiveData<String> = _systemPrompt
+
+    fun updateSystemPrompt(newSystemPrompt:String, keyboardSettingsRepository: KeyboardSettingsRepository){
+        _systemPrompt.postValue(newSystemPrompt)
+        keyboardSettingsRepository.setSystemPrompt(newSystemPrompt)
     }
 
     private val _userPrompts = MutableLiveData<List<String>>(listOf())

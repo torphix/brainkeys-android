@@ -12,6 +12,8 @@ class KeyboardSettingsRepository(private val context: Context){
     private val UserPrompts = "user_prompts"
     private val PREFERENCES_NAME = "keyboard_settings"
     private val ApiKeys = "api_keys"
+    private val SystemPrompt = "system_prompt"
+    private val MaxTokens = "max_tokens"
 
     private fun getPreferences(): SharedPreferences {
         return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -68,5 +70,22 @@ class KeyboardSettingsRepository(private val context: Context){
     fun getApiKey(modelName: String): String? {
         val keyMap = getApiKeys()
         return keyMap[modelName]
+    }
+
+    fun getSystemPrompt(): String {
+        val sharedPreferences = getPreferences()
+        var systemPrompt =  sharedPreferences.getString(SystemPrompt, "") ?: ""
+        if (systemPrompt == ""){
+            systemPrompt = "Keep your answer concise and to the point"
+        }
+        return systemPrompt
+    }
+
+    fun setSystemPrompt(systemPrompt:String) {
+        val sharedPreferences = getPreferences()
+        with(sharedPreferences.edit()) {
+            putString(SystemPrompt, systemPrompt)
+            apply()
+        }
     }
 }

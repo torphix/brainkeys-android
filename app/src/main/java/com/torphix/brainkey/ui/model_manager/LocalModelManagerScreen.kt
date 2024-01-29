@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -116,32 +117,33 @@ private  fun ScaffoldContent(
                     Spacer(modifier= Modifier.height(16.dp))
                     DownloadableLlm.DownloadSection(viewModel, dm, models, keyboardSettingsRepository)
                     Spacer(modifier= Modifier.height(16.dp))
-                    TextField(
-                        placeholder = {Text("Write me an email")},
-                        value = textInputValue.value,
-                        onValueChange = { textInputValue.value = it },
-                        label = { Text("Test it out here") },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier= Modifier.height(16.dp))
+                    SystemPromptTextBox(viewModel, keyboardSettingsRepository)
+//                    TextField(
+//                        placeholder = {Text("Write me an email")},
+//                        value = textInputValue.value,
+//                        onValueChange = { textInputValue.value = it },
+//                        label = { Text("Test it out here") },
+//                        modifier = Modifier.fillMaxWidth()
+//                    )
+//                    Spacer(modifier= Modifier.height(16.dp))
                     // Benchmark model
-                    Button(onClick = {
-                        val extFilesDir = context.getExternalFilesDir(null)
-                        viewModel.load("${extFilesDir}/${viewModel.activeModel.value}")
-                        viewModel.bench(8, 4, 1)
-                        viewModel.clear()
-                    },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .size(50.dp)
-                            .padding(3.dp),
-                        shape = RoundedCornerShape(10.dp)
-                    ) {
-                        Text("Benchmark")
-                    }
-                    if (benchmarkResult.isNotEmpty()){
-                        Text(benchmarkResult)
-                    }
+//                    Button(onClick = {
+//                        val extFilesDir = context.getExternalFilesDir(null)
+//                        viewModel.load("${extFilesDir}/${viewModel.activeModel.value}")
+//                        viewModel.bench(8, 4, 1)
+//                        viewModel.clear()
+//                    },
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .size(50.dp)
+//                            .padding(3.dp),
+//                        shape = RoundedCornerShape(10.dp)
+//                    ) {
+//                        Text("Benchmark")
+//                    }
+//                    if (benchmarkResult.isNotEmpty()){
+//                        Text(benchmarkResult)
+//                    }
                 }
             }
         }
@@ -149,3 +151,22 @@ private  fun ScaffoldContent(
 
 }
 
+
+
+@Composable
+fun SystemPromptTextBox(
+    viewModel: MainViewModel,
+    keyboardSettingsRepository: KeyboardSettingsRepository
+){
+    val systemPrompt by viewModel.systemPrompt.observeAsState("")
+
+
+    TextField(
+        label={Text("System Prompt")},
+        value = systemPrompt,
+        modifier = Modifier.fillMaxWidth(),  // This will make TextField take up full width
+        onValueChange = {viewModel.updateSystemPrompt(it, keyboardSettingsRepository) },
+        placeholder = { Text("System Prompt") },
+        singleLine = true
+    )
+}
