@@ -12,10 +12,15 @@ BrainKey is a keyboard app for Android that integrates LLMs directly into your k
 ## Showcase
 
 ### Video 
-![VideoShowcase](/Screenshots/Screen_Recording_20240129_120528_BrainKey Keyboard.mp4)
+<a href="/Screenshots/Screen_Recording_20240129_120528_BrainKey Keyboard.mp4">Video Showcase</a>
 
 ### Screenshots
-![Screenshot1](/Screenshots/Screenshot_1706389798.png) ![Screenshot2](/Screenshots/Screenshot_1706389933.png) ![Screenshot3](/Screenshots/Screenshot_1706389938.png) ![Screenshot4](/Screenshots/Screenshot_1706389806.png)
+<p>
+  <img src="/Screenshots/Screenshot_1706389798.png" width="200" />
+  <img src="/Screenshots/Screenshot_1706389933.png" width="200" />
+  <img src="/Screenshots/Screenshot_1706389938.png" width="200" />
+  <img src="/Screenshots/Screenshot_1706389806.png" width="200" />
+</p>
 
 ## Installation
 
