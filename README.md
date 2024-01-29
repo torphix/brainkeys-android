@@ -12,7 +12,7 @@ BrainKey is a keyboard app for Android that integrates LLMs directly into your k
 ## Showcase
 
 ### Video 
-<img src="/Screenshots/screen.gif">View Video</img>
+<img src="/Screenshots/screen.gif" width="200" >View Video</img>
 
 ### Screenshots
 <p>
