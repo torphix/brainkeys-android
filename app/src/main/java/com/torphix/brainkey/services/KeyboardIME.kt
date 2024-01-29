@@ -152,6 +152,32 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
             Snackbar.make(it, message, Snackbar.LENGTH_LONG).show()
         }
     }
+    fun sanitizeString(input: String): String {
+        val problematicChars = mapOf(
+            '。' to '.',
+            '、' to ',',
+            '？' to '?',
+        )
+
+        return input.map { char ->
+            problematicChars[char] ?: char // Replace if in map, else keep the character
+        }.joinToString("")
+    }
+
+    fun safelyProcessString(input: String): String {
+        return buildString {
+            input.forEach { char ->
+                try {
+                    // Try adding the character. If it's problematic, an exception will be thrown
+                    append(char)
+                } catch (e: Exception) {
+                    // Handle the exception. You might want to log this error or replace the character
+                    // For example, replace with a placeholder or just skip
+                    append("") // Unicode Replacement Character, or you can choose to skip it
+                }
+            }
+        }
+    }
 
     private fun inferenceLLM(prompt:String, callback: (String) -> Unit, formatPrompt:Boolean=true){
         startNewJob()
@@ -184,7 +210,9 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
                 }.collect {
                     Log.i("Inference Model", "Token $it")
                     if (!isActive) return@collect  // Check for cancellation
-                    callback(it)
+                    val safeString = safelyProcessString(it)
+                    println("Processed")
+                    callback(safeString)
                 }
             } catch (e: CancellationException) {
                 Log.e(tag, "User cancelled inference call")
@@ -193,10 +221,10 @@ class KeyboardIME : BaseKeyboardIME<KeyboardImeBinding>() {
                 showErrorSnackbar("Loading model failed, try selecting / re-downloading")
             } finally {
                 llm.unload()
-                binding?.apply {
-                    keyboardHeader.visible()
-                    keyboardLoading.gone()
-                }
+            }
+            binding?.apply {
+                keyboardHeader.visible()
+                keyboardLoading.gone()
             }
     }}
 
